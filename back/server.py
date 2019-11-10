@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, Response
 app = Flask(__name__)
 
 personState = False
+emailState = False
 
 @app.route('/checkForPerson')
 def checkForPerson():
@@ -19,6 +20,24 @@ def updateState():
     else:
         personState = False
     return 'success'
+# Rec
+@app.route('/checkForEmail')
+def checkForEmail():
+    global emailState
+    resp = jsonify({'email': emailState})
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp, 200
+
+@app.route('/updateEmailState')
+def updateEmailState():
+    global emailState
+    state = request.args.get('email')
+    if state == 'yes':
+        emailState = True
+    else:
+        emailState = False
+    return 'success'
+
 
 if __name__ == '__main__':
     app.run()
