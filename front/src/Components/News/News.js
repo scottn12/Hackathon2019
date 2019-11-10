@@ -12,6 +12,12 @@ export default class News extends Component {
     this.getNews();
   }
 
+  componentDidMount() {
+    setInterval( () => {
+      this.getNews();
+    }, 1000 * 60 * 30);
+  }
+
   getNews() {
     fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=' + API_KEY)
       .then(response => response.json())
@@ -24,8 +30,8 @@ export default class News extends Component {
 
   render() {
     return(
-      <div style={{position: 'absolute', bottom: '100px', width: '45%', fontSize: '50px'}}>
-        <span style={{ fontSize: '120px'}}>NEWS</span>
+      <div style={{position: 'absolute', bottom: '100px', width: '45%', fontSize: '25px'}}>
+        <span style={{ fontSize: '60px'}}>NEWS</span>
         <br></br>
         <ul>
           <li>{this.state.articles[0]}</li>

@@ -5,24 +5,31 @@ import callendar
 app = Flask(__name__)
 
 personState = False
+personList = None
 emailState = False
 registerUser = ['jackson']
 
 @app.route('/checkForPerson')
 def checkForPerson():
     global personState
-    resp = jsonify({'person': personState})
+    global personList
+    resp = jsonify({'person': personState,'data':personList})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
 
-@app.route('/updatePersonState')
+@app.route('/updatePersonState',methods=['POST'])
 def updateState():
     global personState
-    state = request.args.get('person')
-    if state == 'yes':
+    global personList
+    json = request.json
+    # {'person': [['Jackson', 'contempt']]}
+    print(json)
+    if len(json['person'])>0:
         personState = True
+        personList = json['person']
     else:
         personState = False
+        personList = []
     return 'success'
 # Rec
 @app.route('/checkForEmail')

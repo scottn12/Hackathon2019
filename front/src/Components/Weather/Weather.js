@@ -73,28 +73,28 @@ export default class Weather extends Component {
   render() {
     return(
       <div className="weather">
-        <span style={{paddingLeft: '50px', fontSize: '130px'}}>{this.state.temp}°F</span>
+        <span style={{paddingLeft: '50px', fontSize: '75px'}}>{this.state.temp}°F</span>
         <br></br> 
         {this.state.status === 'clear' &&
-          <img alt='' src={ClearIcon}/>
+          <img className="icon" alt='' src={ClearIcon}/>
         }
         {this.state.status === 'cloudy' &&
-          <img alt='' src={CloudyIcon}/>
+          <img className="icon" alt='' src={CloudyIcon}/>
         }
         {this.state.status === 'fog' &&
-          <img alt='' src={FogIcon}/>
+          <img className="icon" alt='' src={FogIcon}/>
         }
         {this.state.status === 'rain' &&
-          <img alt='' src={RainIcon}/>
+          <img className="icon" alt='' src={RainIcon}/>
         }
         {this.state.status === 'snow' &&
-          <img alt='' src={SnowIcon}/>
+          <img className="icon" alt='' src={SnowIcon}/>
         }
         {this.state.status === 'storm' &&
-          <img alt='' src={StormIcon}/>
+          <img className="icon" alt='' src={StormIcon}/>
         }
         {this.state.status === 'clear-night' &&
-          <img alt='' src={NightClearIcon}/>
+          <img className="icon" alt='' src={NightClearIcon}/>
         }
         <br></br>
       </div>
