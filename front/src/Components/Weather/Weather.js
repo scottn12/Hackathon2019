@@ -73,7 +73,7 @@ export default class Weather extends Component {
   render() {
     return(
       <div className="weather">
-        <span style={{fontSize: '70px'}}>{this.state.temp}°F</span>
+        <span style={{paddingLeft: '50px', fontSize: '130px'}}>{this.state.temp}°F</span>
         <br></br> 
         {this.state.status === 'clear' &&
           <img alt='' src={ClearIcon}/>
