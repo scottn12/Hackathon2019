@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Time from './Components/Time/Time';
 import Weather from './Components/Weather/Weather';
+import News from './Components/News/News'
 
 class App extends Component {
   constructor() {
@@ -32,9 +33,9 @@ class App extends Component {
       <div>
         {this.state.showData &&
           <div className="app">
-            <Time style={{float: 'left'}}></Time>
-            <Weather style={{float: 'right'}}></Weather>
-            
+            <Time></Time>
+            <Weather></Weather>
+            <News></News>
           </div>
         }
       </div>
