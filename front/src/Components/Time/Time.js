@@ -21,7 +21,7 @@ export default class Time extends Component{
 
   render() {
     return(
-      <div style={{fontSize: '80px'}}>
+      <div style={{fontSize: '120px'}}>
         {this.state.time}
       </div>
     );

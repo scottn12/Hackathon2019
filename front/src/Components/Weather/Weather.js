@@ -6,6 +6,7 @@ import FogIcon from '../../Assets/fog.png';
 import RainIcon from '../../Assets/rain.png';
 import SnowIcon from '../../Assets/snow.png';
 import StormIcon from '../../Assets/storm.png';
+import NightClearIcon from '../../Assets/clear-night.png'
 
 var API_KEY = 'deb5cfb37421aca2f2e614d3b2b125ee';
 var ZIP = '07101';
@@ -49,7 +50,12 @@ export default class Weather extends Component {
           s = 'fog';
         }
         else if (weatherID === 800) {
-          s = 'clear';
+          if (Date.now() > this.state.sunset || Date.now() < this.state.sunrise) {
+            s = 'clear-night'
+          }
+          else {
+            s = 'clear';
+          }
         }
         else if (weatherID > 800) {
           s = 'cloudy';
@@ -67,7 +73,7 @@ export default class Weather extends Component {
   render() {
     return(
       <div className="weather">
-        <span style={{fontSize: '70px'}}>{this.state.temp} °F</span>
+        <span style={{fontSize: '70px'}}>{this.state.temp}°F</span>
         <br></br> 
         {this.state.status === 'clear' &&
           <img alt='' src={ClearIcon}/>
@@ -86,6 +92,9 @@ export default class Weather extends Component {
         }
         {this.state.status === 'storm' &&
           <img alt='' src={StormIcon}/>
+        }
+        {this.state.status === 'clear-night' &&
+          <img alt='' src={NightClearIcon}/>
         }
         <br></br>
       </div>

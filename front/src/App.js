@@ -14,23 +14,16 @@ class App extends Component {
   // Check for person every second
   componentDidMount() {
     setInterval( () => {
-      fetch('https://smartmirroryoo.azurewebsites.net/checkForPerson')
-        .then((response) => {
-          if (response.ok) {
-            this.setState({
-              showData: true
-            });
-          }
-          else {
-            this.setState({
-              showData: true // PUT BACK TO FALSE
-            });
-          }
+      fetch('http://localhost:5000/checkForPerson')
+        .then(response => response.json())
+        .then(data => {
+          this.setState({
+            showData: true // data.person
+          });
         })
         .catch((error) => {
-          //console.log(error);
+          console.log(error);
         })
-
     }, 1000);
   }
 
@@ -41,6 +34,7 @@ class App extends Component {
           <div className="app">
             <Time style={{float: 'left'}}></Time>
             <Weather style={{float: 'right'}}></Weather>
+            
           </div>
         }
       </div>

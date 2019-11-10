@@ -1,4 +1,4 @@
-from flask import Flask,jsonify, request, Response
+from flask import Flask, jsonify, request, Response
 app = Flask(__name__)
 
 personState = False
@@ -6,11 +6,9 @@ personState = False
 @app.route('/checkForPerson')
 def checkForPerson():
     global personState
-    resp = Response()
+    resp = jsonify({'person': personState})
     resp.headers['Access-Control-Allow-Origin'] = '*'
-    if personState:
-        return resp, 200
-    return resp, 404
+    return resp, 200
 
 @app.route('/updatePersonState')
 def updateState():
