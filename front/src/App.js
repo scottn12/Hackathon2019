@@ -17,6 +17,7 @@ class App extends Component {
       greetMsg1: 'Hi null!',
       greeMsg2: '',
       emoji: '',
+      name: ''
     }
   }
 
@@ -43,8 +44,21 @@ class App extends Component {
       emotion = 'Cheer up! It will be a great day :)';
       emj = '😭';
     }
-    this.setState({greetMsg1:'Hi '+person[0]+'!', greeMsg2: emotion, emoji: emj});
+    else if (person[1] == 'surprise') {
+      emotion = "Suprised? I don't blame you, I'm pretty cool!";
+      emj = '🤯';
+    }
+    else if (person[0] === 'Stranger') {
+      emotion = 'Hey beautiful! I hope like our mirror!';
+    }
+    this.setState({name: person[0], greetMsg1:'Hi '+person[0]+'!', greeMsg2: emotion, emoji: emj});
     this.setState({greet: true})
+    var m = 'Hi ' + person[0] + '!' + emotion
+    /*
+    fetch('http://127.0.0.1:5000/readThis?msg='+m)
+      .then(data=>{
+        console.log(data)
+      })*/
   }
 
   // Check for person every second
@@ -85,7 +99,9 @@ class App extends Component {
         {this.state.showData &&
           <div className="app">
             <Time></Time>
-            <span className="emoji">{this.state.emoji}</span>
+            {this.state.name !== 'Stranger' &&
+              <span className="emoji">{this.state.emoji}</span>
+            }
             <Weather></Weather>
             <div style={{position:"relative",top:"600px", width: '300px', left:"35%",display:"inline-block",fontSize:"30px", textAlign: 'center'}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
               <span style={{fontSize: '50px', fontWeight: '500'}}>{this.state.greetMsg1}</span>

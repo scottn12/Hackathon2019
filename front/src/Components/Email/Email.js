@@ -30,6 +30,7 @@ export default class Email extends Component {
 
   showMail(){
     this.setState({d: true})
+    console.log(this.state.d)
     setTimeout(() => {
       this.setState({ d: false })
     }, 15000)

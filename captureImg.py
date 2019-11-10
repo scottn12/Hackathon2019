@@ -24,7 +24,7 @@ ENDPOINT = 'https://centralus.api.cognitive.microsoft.com/'
 
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 webcam = cv2.VideoCapture(1)
-
+time.sleep(1)
 PERSON_GROUP_ID = 'myteamsfaces'
 TARGET_PERSON_GROUP_ID = str(uuid.uuid4())
 # Debug helpers
@@ -95,6 +95,8 @@ while True:
             emo = best_emotion(face.face_attributes.emotion)
             post['person'].append([name,emo])
             print(f'Name: {name}, Emo: {emo}')
+        if len(names)==0:
+            post['person'].append(['Stranger',emo])
         r = requests.post(url, json=post)
         '''
         img = Image.open('saved_img.jpg')
