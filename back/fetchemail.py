@@ -109,7 +109,7 @@ def main():
 
         print (temp_dict)
         final_list.append(temp_dict) # This will create a dictonary item in the final list
-    return final_list
+    return final_list[:3]
         # This will mark the messagea as read
         #service.users().messages().list(userId=user_id, id=m_id,body={ 'removeLabelIds': ['UNREAD']}).execute() 
 
