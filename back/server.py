@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, Response
+import fetchemail
 import callendar
 
 app = Flask(__name__)
@@ -40,6 +41,13 @@ def updateEmailState():
     else:
         emailState = False
     return 'success'
+
+@app.route('/readEmail')
+def readEmail():
+    r=fetchemail.main()
+    print(r)
+    return jsonify(r)
+    #return 'hello'
 
 @app.route('/getSchedule')
 def schedule():
