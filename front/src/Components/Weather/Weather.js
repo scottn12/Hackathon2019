@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import './Weather.css'
+import './Weather.css';
+import ClearIcon from '../../Assets/clear.png';
+import CloudyIcon from '../../Assets/cloudy.png';
+import FogIcon from '../../Assets/fog.png';
+import RainIcon from '../../Assets/rain.png';
+import SnowIcon from '../../Assets/snow.png';
+import StormIcon from '../../Assets/storm.png';
 
 var API_KEY = 'deb5cfb37421aca2f2e614d3b2b125ee';
 var ZIP = '07101';
@@ -31,7 +37,7 @@ export default class Weather extends Component {
         let weatherID = data.weather[0].id;
         let s = '';
         if (weatherID >= 200 && weatherID < 300) {
-          s = 'thunder storm';
+          s = 'storm';
         }
         else if (weatherID >= 300 && weatherID < 600) {
           s = 'rain';
@@ -61,9 +67,26 @@ export default class Weather extends Component {
   render() {
     return(
       <div className="weather">
-        Temp: {this.state.temp} °F
+        <span style={{fontSize: '70px'}}>{this.state.temp} °F</span>
         <br></br> 
-        Status: {this.state.status}
+        {this.state.status === 'clear' &&
+          <img alt='' src={ClearIcon}/>
+        }
+        {this.state.status === 'cloudy' &&
+          <img alt='' src={CloudyIcon}/>
+        }
+        {this.state.status === 'fog' &&
+          <img alt='' src={FogIcon}/>
+        }
+        {this.state.status === 'rain' &&
+          <img alt='' src={RainIcon}/>
+        }
+        {this.state.status === 'snow' &&
+          <img alt='' src={SnowIcon}/>
+        }
+        {this.state.status === 'storm' &&
+          <img alt='' src={StormIcon}/>
+        }
         <br></br>
       </div>
     );
