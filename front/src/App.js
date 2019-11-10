@@ -14,7 +14,7 @@ class App extends Component {
   // Check for person every second
   componentDidMount() {
     setInterval( () => {
-      fetch('http://localhost:5000/checkForPerson')
+      fetch('https://smartmirroryoo.azurewebsites.net/checkForPerson')
         .then(response => response.json())
         .then(data => {
           this.setState({
