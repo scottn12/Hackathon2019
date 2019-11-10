@@ -13,14 +13,14 @@ export default class Text extends Component {
   componentDidMount() {
     setInterval( () => {
       this.ckText();
-    }, 1000);
+    }, 200);
   }
 
   showMsg(){
     this.setState({s: true})
     setTimeout(() => {
       this.setState({ s: false })
-    }, 5000)
+    }, 7000)
   }
   
   getText(){
@@ -38,6 +38,7 @@ export default class Text extends Component {
     fetch('http://127.0.0.1:5000'+'/checkMsg')
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         if(data['status'] == true){
           this.getText()
         }
@@ -46,12 +47,16 @@ export default class Text extends Component {
 
   render() {
     return(
-      <div style={{ position: 'absolute', right: '200px', top: '100px', fontSize: '25px',width:'100px' }} className={this.state.s ? 'fadeIn' : 'fadeOut'} >
-        <span style={{ fontSize: '30px'}}>Confirm MSG</span>
-        <br></br>
-        <span style={{ fontSize: '20px' }}>Send out: {this.state.msg}</span>
-        <br></br>
-        <span style={{ fontSize: '20px' }}>is that ok?</span>
+      <div>
+      {this.state.s &&
+          <div style={{ position: "relative", top: "300px", width: '300px', left: "35%", display: "inline-block", fontSize: "30px", textAlign: 'center' }}>
+          <span style={{ fontSize: '30px' }}>Confirm MSG</span>
+          <br></br>
+          <span style={{ fontSize: '20px' }}>Send out: {this.state.msg}</span>
+          <br></br>
+          <span style={{ fontSize: '20px' }}>is that ok?</span>
+        </div>
+      }
       </div>
     );
   }

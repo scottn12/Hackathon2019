@@ -85,7 +85,6 @@ while True:
 	if result.reason == speechsdk.ResultReason.RecognizedSpeech:
 		print("Recognized: {}".format(result.text))
 		if(result.text.find("Send a message") != -1):
-			print('here')
 			for i in range(len(names)):
 				if(result.text.find(names[i]) != -1):
 					print('Say the content')
@@ -93,23 +92,27 @@ while True:
 					result = speech_recognizer.recognize_once()
 					if result.reason == speechsdk.ResultReason.RecognizedSpeech:
 						t = result.text
-						print(f'Sending mesg: {t}, confirm?')
 						r = requests.get('http://127.0.0.1:5000'+'/confirmMsg?msg='+t)
+						print(f'Sending mesg: {t}, do you want to send it?')
+						speak_out(f'Sending message: {t}, do you want to send it?')
 						# Send result to frontend for comfirm
+						result = speech_recognizer.recognize_once()
+						if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+							if result.text.find('Yes') is not -1:
+								message = client.messages.create(
+									body=t,
+									to=phoneNumbers[i],
+									from_='+12565768383'
+								)
+								print('Sent!')
+								speak_out('Sent')
+							else:
+								print('Canceled')
+								speak_out('Canceled')
 					else:
 						t = 'Can\'t understand'
 						continue
-					result = speech_recognizer.recognize_once()
-					if result.reason == speechsdk.ResultReason.RecognizedSpeech:
-						if result.text.find('Yes') is not -1:
-							message = client.messages.create(
-								body=t,
-								to=phoneNumbers[i],
-								from_='+12565768383'
-							)
-							print('Sent!')
-						else:
-							print('Canceled')
+
 					
 	elif result.reason == speechsdk.ResultReason.NoMatch:
 		print("No speech could be recognized: {}".format(result.no_match_details))

@@ -63,7 +63,7 @@ url = 'https://smartmirroryoo.azurewebsites.net/updatePersonState?person='
 url = 'http://127.0.0.1:5000/updatePersonState'
 while True:
     check, frame = webcam.read()
-    time.sleep(5)
+    time.sleep(.5)
     cv2.imwrite(filename='saved_img.jpg', img=frame)
     im1 = open("saved_img.jpg", "rb")
 

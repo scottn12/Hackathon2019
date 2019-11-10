@@ -14,7 +14,9 @@ class App extends Component {
       showData: true,
       inScreen: [],
       greet: false,
-      greetMsg: 'Hi null!'
+      greetMsg1: 'Hi null!',
+      greeMsg2: '',
+      emoji: '',
     }
   }
 
@@ -27,11 +29,22 @@ class App extends Component {
   }
 
   showGreet(person){
-    this.setState({greetMsg:'Hi, '+person[0]+'\n You look pretty '+person[1]})
+    let emotion = '';
+    let emj = '';
+    if (person[1] == 'happiness') {
+      emotion = 'You look great! I love your smile!';
+      emj = '😃';
+    }
+    else if (person[1] == 'neutral') {
+      emotion = 'Looking good! Today will be aweosome!';
+      emj = '😐';
+    }
+    else if (person[1] == 'sadness') {
+      emotion = 'Cheer up! It will be a great day :)';
+      emj = '😭';
+    }
+    this.setState({greetMsg1:'Hi '+person[0]+'!', greeMsg2: emotion, emoji: emj});
     this.setState({greet: true})
-    setTimeout(()=>{
-      this.setState({greet: false})
-    },5000)
   }
 
   // Check for person every second
@@ -63,7 +76,7 @@ class App extends Component {
         .catch((error) => {
           console.log(error);
         })
-    }, 1000);
+    }, 100);
   }
 
   render() {
@@ -72,9 +85,12 @@ class App extends Component {
         {this.state.showData &&
           <div className="app">
             <Time></Time>
+            <span className="emoji">{this.state.emoji}</span>
             <Weather></Weather>
-            <div style={{position:"relative",top:"300px",left:"35%",display:"inline-block",fontSize:"30px"}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
-              {this.state.greetMsg}
+            <div style={{position:"relative",top:"600px", width: '300px', left:"35%",display:"inline-block",fontSize:"30px", textAlign: 'center'}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
+              <span style={{fontSize: '50px', fontWeight: '500'}}>{this.state.greetMsg1}</span>
+              <br></br>
+              {this.state.greeMsg2}
             </div>
             <Text></Text>
             <News></News>

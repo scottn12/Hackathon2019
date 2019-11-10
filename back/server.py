@@ -11,22 +11,24 @@ registerUser = ['jackson']
 hasMsg = False
 Msg = ''
 
+
 @app.route('/checkForPerson')
 def checkForPerson():
     global personState
     global personList
-    resp = jsonify({'person': personState,'data':personList})
+    resp = jsonify({'person': personState, 'data': personList})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
 
-@app.route('/updatePersonState',methods=['POST'])
+
+@app.route('/updatePersonState', methods=['POST'])
 def updateState():
     global personState
     global personList
     json = request.json
     # {'person': [['Jackson', 'contempt']]}
     print(json)
-    if len(json['person'])>0:
+    if len(json['person']) > 0:
         personState = True
         personList = json['person']
     else:
@@ -37,9 +39,14 @@ def updateState():
 @app.route('/checkForEmail')
 def checkForEmail():
     global emailState
-    resp = jsonify({'email': emailState})
+    if emailState:
+        resp = jsonify({'email': True})
+        emailState = False
+    else:
+        resp = jsonify({'email': False})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
+
 
 @app.route('/updateEmailState')
 def updateEmailState():
@@ -51,26 +58,29 @@ def updateEmailState():
         emailState = False
     return 'success'
 
+
 @app.route('/readEmail')
 def readEmail():
-    r=fetchemail.main()
+    r = fetchemail.main()
     resp = jsonify({'email': r})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
+
 
 @app.route('/getSchedule')
 def schedule():
     global registerUser
     person = request.args.get('user')
     if person not in registerUser:
-        resp = jsonify({'status':'nRegistered'})
+        resp = jsonify({'status': 'nRegistered'})
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp, 200
     else:
         s = callendar.getSchedule(person)
         return jsonify(s)
 
-@app.route('/confirmMsg',methods=['GET'])
+
+@app.route('/confirmMsg', methods=['GET'])
 def addComfirm():
     global hasMsg
     global Msg
@@ -79,7 +89,8 @@ def addComfirm():
     Msg = msg
     return 'success'
 
-@app.route('/checkMsg',methods=['GET'])
+
+@app.route('/checkMsg', methods=['GET'])
 def ckMsg():
     global hasMsg
     if hasMsg:
@@ -93,12 +104,14 @@ def ckMsg():
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp, 200
 
-@app.route('/getMsg',methods=['GET'])
+
+@app.route('/getMsg', methods=['GET'])
 def getMst():
     global Msg
     resp = jsonify({'msg': Msg})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
+
 
 if __name__ == '__main__':
     app.run()

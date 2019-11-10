@@ -45,12 +45,12 @@ if __name__ == "__main__":
     print('Getting starting...')
     time.sleep(2)
     while True:
-        url = 'https://smartmirroryoo.azurewebsites.net/updateKeywordState?email='
+        url = 'http://127.0.0.1:5000/updateEmailState?email='
 
         print('What do you want to know?\n')
         guess = recognize_speech_from_mic(recognizer, microphone)
         abc=guess["transcription"]
-        news='news'
+        news='email'
         stop='stop'
         if guess["transcription"] or not guess["success"]:
             if stop in abc and abc is not None:
