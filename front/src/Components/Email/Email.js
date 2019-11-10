@@ -11,7 +11,9 @@ export default class Email extends Component {
 
   componentDidMount() {
     this.getMail()
-    
+    setInterval(() => {
+      this.getMail()
+    }, 1000 * 10)
   }
 
   getMail() {
@@ -21,11 +23,14 @@ export default class Email extends Component {
         this.setState({emails:data['email']})
         console.log(this.state.emails)
       })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   render() {
     return (
-      <div style={{ position: 'fixed', top: '1480px', width: '35%', fontSize: '25px', right: '20px' }}>
+      <div style={{ position: 'fixed', top: '1540px', width: '40%', fontSize: '25px', right: '40px' }}>
         <span style={{ fontSize: '60px' }}>EMAILS</span>
         <br></br>
         <ul>
