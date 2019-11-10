@@ -30,7 +30,7 @@ export default class News extends Component {
 
   render() {
     return(
-      <div style={{position: 'absolute', bottom: '100px', width: '45%', fontSize: '25px'}}>
+      <div style={{position: 'fixed', top: '1480px', width: '45%', fontSize: '25px'}}>
         <span style={{ fontSize: '60px'}}>NEWS</span>
         <br></br>
         <ul>

@@ -5,6 +5,7 @@ import Weather from './Components/Weather/Weather';
 import News from './Components/News/News'
 import Calendar from './Components/Calendar/Calendar'
 import Text from './Components/Text/Text'
+import Email from './Components/Email/Email';
 
 class App extends Component {
   constructor() {
@@ -77,6 +78,7 @@ class App extends Component {
             </div>
             <Text></Text>
             <News></News>
+            <Email></Email>
           </div>
         }
       </div>

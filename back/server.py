@@ -55,7 +55,9 @@ def updateEmailState():
 def readEmail():
     r=fetchemail.main()
     print(r)
-    return jsonify(r)
+    resp = jsonify({'email': r})
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp, 200
 
 @app.route('/getSchedule')
 def schedule():
