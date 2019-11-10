@@ -1,3 +1,5 @@
 venv/
 .vscode/
 __pycache__/
+.azure
+package-lock.json
