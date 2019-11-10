@@ -12,7 +12,7 @@ from googleapiclient.discovery import build
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
-def getSchedule():
+def getSchedule(user):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
@@ -20,7 +20,7 @@ def getSchedule():
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    userPickle = 'jackson.pickle'
+    userPickle = user+'.pickle'
     if os.path.exists(userPickle):
         with open(userPickle, 'rb') as token:
             creds = pickle.load(token)
@@ -30,7 +30,7 @@ def getSchedule():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                '/Users/Jackson/project/repo/Hackathon2019/back/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open(userPickle, 'wb') as token:
@@ -50,10 +50,11 @@ def getSchedule():
 
     if not events:
         print('No upcoming events found.')
+    r ={'events':[]}
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-
+        r['events'].append({'time': start, 'summary':event['summary']})
+    return r
 
 if __name__ == '__main__':
     main()

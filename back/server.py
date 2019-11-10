@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request, Response
+import callendar
+
 app = Flask(__name__)
 
 personState = False
 emailState = False
+registerUser = ['jackson']
 
 @app.route('/checkForPerson')
 def checkForPerson():
@@ -38,6 +41,17 @@ def updateEmailState():
         emailState = False
     return 'success'
 
-
+@app.route('/getSchedule')
+def schedule():
+    global registerUser
+    person = request.args.get('user')
+    if person not in registerUser:
+        resp = jsonify({'status':'nRegistered'})
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp, 200
+    else:
+        s = callendar.getSchedule(person)
+        print(jsonify(s))
+        return jsonify(s)
 if __name__ == '__main__':
     app.run()
