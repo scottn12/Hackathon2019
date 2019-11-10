@@ -11,8 +11,8 @@ from msrest.authentication import CognitiveServicesCredentials
 attri = ['emotion', 'age']
 # KEY = '06bfe4c9841a4acfb7926f707c18bc91'
 # ENDPOINT = 'https://centralus.api.cognitive.microsoft.com'
-KEY = os.environ['FACE_SUBSCRIPTION_KEY']
-ENDPOINT = os.environ['FACE_ENDPOINT']
+KEY = '19844e61112344d597448b416a259cc4'
+ENDPOINT = 'https://centralus.api.cognitive.microsoft.com/'
 
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 webcam = cv2.VideoCapture(0)
