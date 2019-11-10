@@ -8,6 +8,8 @@ personState = False
 personList = None
 emailState = False
 registerUser = ['jackson']
+hasMsg = False
+Msg = ''
 
 @app.route('/checkForPerson')
 def checkForPerson():
@@ -54,7 +56,6 @@ def readEmail():
     r=fetchemail.main()
     print(r)
     return jsonify(r)
-    #return 'hello'
 
 @app.route('/getSchedule')
 def schedule():
@@ -68,5 +69,36 @@ def schedule():
         s = callendar.getSchedule(person)
         print(jsonify(s))
         return jsonify(s)
+
+@app.route('/confirmMsg',methods=['GET'])
+def addComfirm():
+    global hasMsg
+    global Msg
+    msg = request.args.get('msg')
+    hasMsg = True
+    Msg = msg
+    return 'success'
+
+@app.route('/checkMsg',methods=['GET'])
+def ckMsg():
+    global hasMsg
+    if hasMsg:
+        t = hasMsg
+        hasMsg = False
+        resp = jsonify({'status': t})
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp, 200
+    else:
+        resp = jsonify({'status': hasMsg})
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp, 200
+
+@app.route('/getMsg',methods=['GET'])
+def getMst():
+    global Msg
+    resp = jsonify({'msg': Msg})
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp, 200
+
 if __name__ == '__main__':
     app.run()

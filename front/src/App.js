@@ -4,6 +4,7 @@ import Time from './Components/Time/Time';
 import Weather from './Components/Weather/Weather';
 import News from './Components/News/News'
 import Calendar from './Components/Calendar/Calendar'
+import Text from './Components/Text/Text'
 
 class App extends Component {
   constructor() {
@@ -71,9 +72,10 @@ class App extends Component {
           <div className="app">
             <Time></Time>
             <Weather></Weather>
-            <div style={{position:"relative",top:"300px",left:"35%",display:"inline-block"}} className={this.state.greet ? 'fadeIn' : 'fadeOut'}>
+            <div style={{position:"relative",top:"300px",left:"35%",display:"inline-block"}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
               {this.state.greetMsg}
             </div>
+            <Text></Text>
             <News></News>
           </div>
         }

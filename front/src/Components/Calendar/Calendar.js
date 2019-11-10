@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './Calendar.css';
 
-var API_KEY = 'c5e77b2452c7475b80e127915a27b790';
-
 export default class News extends Component {
   constructor() {
     super();
