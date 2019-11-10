@@ -1,17 +1,21 @@
 import asyncio
-import io
 import glob
+import io
 import os
 import sys
 import time
 import uuid
-import requests
-from urllib.parse import urlparse
 from io import BytesIO
-from PIL import Image, ImageDraw
+from urllib.parse import urlparse
+
+import requests
 from azure.cognitiveservices.vision.face import FaceClient
+from azure.cognitiveservices.vision.face.models import (OperationStatusType,
+                                                        Person,
+                                                        SnapshotObjectType,
+                                                        TrainingStatusType)
 from msrest.authentication import CognitiveServicesCredentials
-from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
+from PIL import Image, ImageDraw
 
 
 def best_emotion(emotion):
