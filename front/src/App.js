@@ -73,7 +73,7 @@ class App extends Component {
           <div className="app">
             <Time></Time>
             <Weather></Weather>
-            <div style={{position:"relative",top:"300px",left:"35%",display:"inline-block"}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
+            <div style={{position:"relative",top:"300px",left:"35%",display:"inline-block",fontSize:"30px"}} className={this.state.greet ? 'fadeInG' : 'fadeOutG'}>
               {this.state.greetMsg}
             </div>
             <Text></Text>

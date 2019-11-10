@@ -21,7 +21,6 @@ export default class Email extends Component {
       .then(response => response.json())
       .then(data =>{
         this.setState({emails:data['email']})
-        console.log(this.state.emails)
       })
       .catch((error) => {
         console.log(error);

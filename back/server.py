@@ -54,7 +54,6 @@ def updateEmailState():
 @app.route('/readEmail')
 def readEmail():
     r=fetchemail.main()
-    print(r)
     resp = jsonify({'email': r})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp, 200
@@ -69,7 +68,6 @@ def schedule():
         return resp, 200
     else:
         s = callendar.getSchedule(person)
-        print(jsonify(s))
         return jsonify(s)
 
 @app.route('/confirmMsg',methods=['GET'])
