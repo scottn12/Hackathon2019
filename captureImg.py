@@ -1,30 +1,24 @@
-import cv2
-import time
-import asyncio
-import glob
-import io
-import os
-import sys
-import time
-import uuid
-from io import BytesIO
+import asyncio, io, glob, os, sys, time, uuid, requests, cv2
 from urllib.parse import urlparse
-
-import requests
-from azure.cognitiveservices.vision.face import FaceClient
-from azure.cognitiveservices.vision.face.models import (OperationStatusType,
-                                                        Person,
-                                                        SnapshotObjectType,
-                                                        TrainingStatusType)
-from msrest.authentication import CognitiveServicesCredentials
+from io import BytesIO
 from PIL import Image, ImageDraw
+from azure.cognitiveservices.vision.face import FaceClient
+from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person, SnapshotObjectType, OperationStatusType
+from msrest.authentication import CognitiveServicesCredentials
+
 # Configs
 attri = ['emotion', 'age']
-KEY = '06bfe4c9841a4acfb7926f707c18bc91'
-ENDPOINT = 'https://centralus.api.cognitive.microsoft.com'
+# KEY = '06bfe4c9841a4acfb7926f707c18bc91'
+# ENDPOINT = 'https://centralus.api.cognitive.microsoft.com'
+KEY = '19844e61112344d597448b416a259cc4'
+ENDPOINT = 'https://centralus.api.cognitive.microsoft.com/'
+
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 webcam = cv2.VideoCapture(0)
 
+PERSON_GROUP_ID = 'myteamsfaces'
+TARGET_PERSON_GROUP_ID = str(uuid.uuid4())
 # Debug helpers
 
 
@@ -62,8 +56,33 @@ while True:
     time.sleep(5)
     cv2.imwrite(filename='saved_img.jpg', img=frame)
     im1 = open("saved_img.jpg", "rb")
+    im2 = open("saved_img.jpg", "rb")
+	
+	# Identify the person
+    face_ids = []
+    faces = face_client.face.detect_with_stream(im1)
+    for face in faces:
+        face_ids.append(face.face_id)
+		
+	# Identify faces
+    results = face_client.face.identify(face_ids, PERSON_GROUP_ID)
+    names = []
+    for result in results:
+        candidates = sorted(result.candidates, key=lambda c: c.confidence, reverse=True)
+        if len(candidates) > 0:
+            top_candidate = candidates[0]
+            person = face_client.person_group_person.get(PERSON_GROUP_ID, top_candidate.person_id)
+            if top_candidate.confidence > .8:
+                names.append(person.name)
+            else:
+                names.append(person.name)
+
+    for name in names:
+        print(name)
+	
+
     detected_faces = face_client.face.detect_with_stream(
-        image=im1, return_face_attributes=attri)
+        image=im2, return_face_attributes=attri)
     url = 'https://smartmirroryoo.azurewebsites.net/updatePersonState?person='
     if not detected_faces:
         r = requests.get(url+'no')
